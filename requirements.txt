@@ -1,7 +1,7 @@
 gdown>=4.7.1
 streamlit>=1.28.0
 ultralytics>=8.0.0
-opencv-python>=4.8.0
+opencv-python-headless>=4.8.0  # Changed this line
 torch>=2.0.0
 torchvision>=0.15.0
 Pillow>=9.0.0
