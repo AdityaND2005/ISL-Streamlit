@@ -3,6 +3,9 @@ import cv2
 import numpy as np
 from PIL import Image
 from ultralytics import YOLO
+import gdown
+import os
+import requests
 
 # Page config
 st.set_page_config(page_title="ISL Recognition", page_icon="🤟", layout="wide")
@@ -11,11 +14,27 @@ st.set_page_config(page_title="ISL Recognition", page_icon="🤟", layout="wide"
 @st.cache_resource
 def load_model():
     model_path = "best.pt"
+    
     if not os.path.exists(model_path):
-        st.info("Loading model (first time)...")
-        file_id = "1li65r7GXuNQ1fNl9GvtB20FYhyVzwBDt"  # Replace with your ID
-        url = f"https://drive.google.com/uc?id={file_id}"
-        gdown.download(url, model_path, quiet=False)
+        with st.spinner("Downloading model (first time only)... Please wait."):
+            try:
+                # Option 2A: Google Drive
+                # Replace 'YOUR_FILE_ID' with actual Google Drive file ID
+                file_id = "1li65r7GXuNQ1fNl9GvtB20FYhyVzwBDt"
+                url = f"https://drive.google.com/uc?id={file_id}"
+                gdown.download(url, model_path, quiet=False)
+                
+                # Option 2B: Direct URL (Dropbox, GitHub Releases, etc.)
+                # model_url = "YOUR_DIRECT_DOWNLOAD_URL"
+                # response = requests.get(model_url)
+                # with open(model_path, 'wb') as f:
+                #     f.write(response.content)
+                
+                st.success("Model loaded successfully!")
+            except Exception as e:
+                st.error(f"Error downloading model: {e}")
+                st.stop()
+    
     return YOLO(model_path)
 
 # Main app
