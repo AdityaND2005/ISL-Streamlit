@@ -10,7 +10,13 @@ st.set_page_config(page_title="ISL Recognition", page_icon="🤟", layout="wide"
 # Load model (cached)
 @st.cache_resource
 def load_model():
-    return YOLO('best.pt')
+    model_path = "best.pt"
+    if not os.path.exists(model_path):
+        st.info("Loading model (first time)...")
+        file_id = "YOUR_GOOGLE_DRIVE_FILE_ID"  # Replace with your ID
+        url = f"https://drive.google.com/uc?id={file_id}"
+        gdown.download(url, model_path, quiet=False)
+    return YOLO(model_path)
 
 # Main app
 def main():
