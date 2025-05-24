@@ -13,7 +13,7 @@ def load_model():
     model_path = "best.pt"
     if not os.path.exists(model_path):
         st.info("Loading model (first time)...")
-        file_id = "YOUR_GOOGLE_DRIVE_FILE_ID"  # Replace with your ID
+        file_id = "1li65r7GXuNQ1fNl9GvtB20FYhyVzwBDt"  # Replace with your ID
         url = f"https://drive.google.com/uc?id={file_id}"
         gdown.download(url, model_path, quiet=False)
     return YOLO(model_path)
